@@ -3,6 +3,7 @@ const passwordLengthInput = document.querySelector("#length");
 const passwordLengthSpan = document.querySelector("#lengthText");
 const allCheckboxes = document.querySelectorAll("input[type=checkbox]");
 const copyButton = document.querySelector(".copy");
+const refreshButton = document.querySelector(".refresh");
 
 const symbols = ["@", "#", "$", "%", "&", "=", "+", "?", "~"];
 const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -11,7 +12,12 @@ const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 const similar = ["i", "l", "1", "L", "o", "0", "O"];
 let available = [...symbols, ...numbers, ...lowercase, ...uppercase];
 
-console.log("Initial load", available);
+(function init() {
+  initEventListeners();
+  console.log("Initial load", available);
+  generatePassword();
+  passwordLengthSpan.textContent = passwordLengthInput.value;
+})();
 
 function removeGroup(checkboxId) {
   if (checkboxId === "symbols") {
@@ -52,39 +58,65 @@ function enableGroup(checkboxId) {
 function handleCheckboxChange(event) {
   if (!event.target.checked) {
     removeGroup(event.target.id);
-    passwordInput.value = generatePassword();
+    generatePassword();
     console.log("Removed", event.target.id, available);
   }
 
   if (event.target.checked) {
     enableGroup(event.target.id);
-    passwordInput.value = generatePassword();
+    generatePassword();
     console.log("Enabled", event.target.id, available);
   }
 }
 
 function handleCopy() {
   navigator.clipboard.writeText(passwordInput.value);
-  console.log(`Copied ${passwordInput.value} to clipboard`); // eslint-disable-line no-console
+  console.log(`Copied "${passwordInput.value}" to clipboard`); // eslint-disable-line no-console
   copyButton.classList.add("copied");
   setTimeout(() => copyButton.classList.remove("copied"), 450);
 }
 
 function initEventListeners() {
+  /* */
+  // Checkboxes to enable/disable groups
+
   [...allCheckboxes].forEach((checkbox) => {
     checkbox.addEventListener("change", (event) => handleCheckboxChange(event), false);
   });
 
+  // Use slider to change password length
+
   passwordLengthInput.addEventListener("input", () => {
     passwordLengthSpan.textContent = passwordLengthInput.value;
-    passwordInput.value = generatePassword();
+    generatePassword();
   });
 
+  // Click to copy and refresh
+
   copyButton.addEventListener("click", handleCopy);
+  refreshButton.addEventListener("click", generatePassword);
+
+  // Ctrl + C to copy and Alt + R/G/N to refresh
 
   document.addEventListener("keyup", (event) => {
     if (event.ctrlKey && event.key === "c") {
       handleCopy();
+    }
+
+    if (event.altKey && ["r", "g", "n"].includes(event.key.toLowerCase())) {
+      generatePassword();
+    }
+  });
+
+  // Alt + scroll to change password length
+
+  document.addEventListener("mousewheel", (event) => {
+    if (event.altKey) {
+      const delta = Math.sign(event.deltaY);
+      const newValue = parseInt(passwordLengthInput.value, 10) + delta;
+      passwordLengthInput.value = newValue;
+      passwordLengthSpan.textContent = newValue;
+      generatePassword();
     }
   });
 }
@@ -98,10 +130,5 @@ function generatePassword() {
     password.push(available[randomIndex]);
   }
 
-  return password.join("");
+  passwordInput.value = password.join("");
 }
-
-(function init() {
-  initEventListeners();
-  passwordInput.value = generatePassword();
-})();

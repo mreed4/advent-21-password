@@ -22,7 +22,10 @@ body {
 input[type="text"] {
   font-family: "Roboto Mono", monospace;
   background: #ffffff;
-  box-shadow: 0px 0px 24px #cadbd2;
+  border: 1px solid transparent;
+  border-top: none;
+  border-bottom: 1px solid #ddd;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.39), 0 -1px 1px #fff, 0 1px 0 #fff;
   border-radius: 20px;
   font-family: Roboto Mono;
   font-size: 32px;
@@ -36,31 +39,37 @@ input[type="text"] {
   margin-right: 18px;
 }
 
-.copy {
+button {
   background: none;
   border: none;
   color: #7da9ae;
   display: flex;
   align-items: center;
   font-family: "Roboto", sans-serif;
-  font-size: 24px;
+  font-size: 2rem;
   height: 100px;
   margin-bottom: 40px;
-  min-width: 140px;
   cursor: pointer;
+  padding-right: 1rem;
+  position: relative;
+}
+
+.refresh span {
+  position: absolute;
+  left: -6rem;
+  z-index: 3;
+}
+
+.copy {
   transition: color 150ms ease-in-out;
+  /* min-width: 140px; */
 }
 
-.copy svg {
-  fill: currentColor;
-  margin-right: 0px;
+button span:first-of-type {
+  font-size: 3rem;
 }
 
-.copy.copied svg {
-  animation: bubble 450ms ease-in-out;
-}
-
-.copy span {
+.copy span:last-of-type {
   opacity: 0;
   transition: opacity 150ms ease-in-out;
   font-weight: bold;
@@ -68,11 +77,11 @@ input[type="text"] {
 
 .copy.copied {
   color: #4a9661;
+  animation: bubble 450ms ease-in-out;
 }
 
-.copy.copied span {
+.copy.copied span:last-of-type {
   opacity: 1;
-  animation: bubble 450ms ease-in-out;
 }
 
 input[type="range"] {
@@ -89,6 +98,7 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
   position: relative;
   top: -12px;
+  transition: background 150ms ease-in-out;
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -99,6 +109,7 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   position: relative;
   top: -12px;
+  transition: background 150ms ease-in-out;
 }
 
 input[type="range"]::-ms-thumb {
@@ -109,6 +120,20 @@ input[type="range"]::-ms-thumb {
   cursor: pointer;
   position: relative;
   top: -12px;
+
+  transition: background 150ms ease-in-out;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  background: #4a9661;
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+  background: #4a9661;
+}
+
+input[type="range"]:hover::-ms-thumb {
+  background: #4a9661;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
