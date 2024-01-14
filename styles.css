@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400;700&display=swap");
 
 body {
   min-width: 100vw;
@@ -6,10 +6,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #F1F7F4;
-  font-family: 'Roboto', sans-serif;
+  background-color: #f1f7f4;
+  font-family: "Roboto", sans-serif;
   font-size: 24px;
-  color: #31292F;
+  color: #31292f;
 }
 
 .field {
@@ -18,10 +18,10 @@ body {
   margin-bottom: 24px;
 }
 
-input[type=text] {
-  font-family: 'Roboto Mono', monospace;
-  background: #FFFFFF;
-  box-shadow: 0px 0px 24px #CADBD2;
+input[type="text"] {
+  font-family: "Roboto Mono", monospace;
+  background: #ffffff;
+  box-shadow: 0px 0px 24px #cadbd2;
   border-radius: 20px;
   font-family: Roboto Mono;
   font-size: 32px;
@@ -38,10 +38,10 @@ input[type=text] {
 .copy {
   background: none;
   border: none;
-  color: #7DA9AE;
+  color: #7da9ae;
   display: flex;
   align-items: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 24px;
   height: 100px;
   margin-bottom: 40px;
@@ -58,7 +58,7 @@ input[type=text] {
 }
 
 .copy.copied {
-  color: #4A9661;
+  color: #4a9661;
   font-weight: bold;
 }
 
@@ -66,59 +66,59 @@ input[type=text] {
   display: block;
 }
 
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   height: 35px;
   width: 35px;
   border-radius: 50%;
-  background: #7DA9AE;
+  background: #7da9ae;
   cursor: pointer;
   position: relative;
   top: -12px;
 }
 
-input[type=range]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   height: 35px;
   width: 35px;
   border-radius: 50%;
-  background: #7DA9AE;
+  background: #7da9ae;
   cursor: pointer;
   position: relative;
   top: -12px;
 }
 
-input[type=range]::-ms-thumb {
+input[type="range"]::-ms-thumb {
   height: 35px;
   width: 35px;
   border-radius: 50%;
-  background: #7DA9AE;
+  background: #7da9ae;
   cursor: pointer;
   position: relative;
   top: -12px;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
-  background: #CEDFE1;
+input[type="range"]::-webkit-slider-runnable-track {
+  background: #cedfe1;
   border-radius: 4px;
   width: 385px;
   height: 9px;
 }
 
-input[type=range] {
+input[type="range"] {
   width: 385px;
   margin-right: 35px;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   display: none;
 }
 
-input[type=checkbox] + label {
+input[type="checkbox"] + label {
   background: url("images/checkbox--unchecked.svg") left top no-repeat;
   padding-left: 50px;
   min-height: 35px;
@@ -126,6 +126,6 @@ input[type=checkbox] + label {
   cursor: pointer;
 }
 
-input[type=checkbox]:checked + label {
+input[type="checkbox"]:checked + label {
   background: url("images/checkbox--checked.svg") left top no-repeat;
 }
