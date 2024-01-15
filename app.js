@@ -3,7 +3,7 @@ const passwordLengthInput = document.querySelector("#length");
 const passwordLengthSpan = document.querySelector("#lengthText");
 const allCheckboxes = document.querySelectorAll("input[type=checkbox]");
 const copyButton = document.querySelector(".copy");
-const refreshButton = document.querySelector(".refresh");
+const generateButton = document.querySelector(".generate");
 
 const symbols = ["@", "#", "$", "%", "&", "=", "+", "?", "~"];
 const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -94,13 +94,13 @@ function initEventListeners() {
   // Click to copy and refresh
 
   copyButton.addEventListener("click", handleCopy);
-  refreshButton.addEventListener("click", generatePassword);
+  generateButton.addEventListener("click", generatePassword);
 
   // Ctrl + C to copy and Alt + R/G/N to refresh
 
   document.addEventListener("keyup", (event) => {
     if (event.ctrlKey && event.key === "c") {
-      handleCopy();
+      false && handleCopy();
     }
 
     if (event.altKey && ["r", "g", "n"].includes(event.key.toLowerCase())) {
@@ -110,15 +110,22 @@ function initEventListeners() {
 
   // Alt + scroll to change password length
 
-  document.addEventListener("mousewheel", (event) => {
-    if (event.altKey) {
-      const delta = Math.sign(event.deltaY);
-      const newValue = parseInt(passwordLengthInput.value, 10) + delta;
-      passwordLengthInput.value = newValue;
-      passwordLengthSpan.textContent = newValue;
-      generatePassword();
-    }
-  });
+  false &&
+    document.addEventListener("mousewheel", (event) => {
+      /* */
+
+      if (event.altKey && (+passwordLengthSpan.textContent < 7 || +passwordLengthSpan.textContent > 24)) {
+        // return;
+      }
+
+      if (event.altKey) {
+        const delta = Math.sign(event.deltaY);
+        const newValue = parseInt(passwordLengthInput.value, 10) + delta;
+        passwordLengthInput.value = newValue;
+        passwordLengthSpan.textContent = newValue;
+        generatePassword();
+      }
+    });
 }
 
 function generatePassword() {
@@ -131,4 +138,52 @@ function generatePassword() {
   }
 
   passwordInput.value = password.join("");
+
+  // const passwordStrength = getPasswordStrength(passwordInput.value);
+
+  // passwordInput.classList.remove("weak", "medium", "strong");
+
+  // if (passwordStrength === "weak") {
+  //   passwordInput.classList.add("weak");
+  // }
+
+  // if (passwordStrength === "medium") {
+  //   passwordInput.classList.add("medium");
+  // }
+
+  // if (passwordStrength === "strong") {
+  //   passwordInput.classList.add("strong");
+  // }
+}
+
+// Unused
+
+function getPasswordStrength(password) {
+  const length = password.length;
+  const hasNumbers = /\d/.test(password);
+  const hasSymbols = /[@#$%&=+?~]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
+  const hasUppercase = /[A-Z]/.test(password);
+
+  const strengthTests = {
+    length: length >= 8,
+    numbers: hasNumbers,
+    symbols: hasSymbols,
+    lowercase: hasLowercase,
+    uppercase: hasUppercase,
+  };
+
+  if (Object.values(strengthTests).every((test) => test)) {
+    return "strong";
+  }
+
+  if (Object.values(strengthTests).some((test) => test)) {
+    return "medium";
+  }
+
+  if (length < 8 || !Object.values(strengthTests).every((test) => test)) {
+    return "weak";
+  }
+
+  return "weak";
 }
